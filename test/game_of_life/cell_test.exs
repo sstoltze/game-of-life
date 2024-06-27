@@ -6,4 +6,9 @@ defmodule GameOfLife.CellTest do
     c = Cell.new(0, 0, contents: :a_thing)
     assert Cell.get(c) == :a_thing
   end
+
+  test "cells can be queried by coordinates" do
+    Cell.new(0, 0, contents: :another_thing)
+    assert Cell.get(0, 0) == :another_thing
+  end
 end
