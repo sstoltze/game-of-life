@@ -2,10 +2,7 @@ defmodule GameOfLife.Cell do
   use GenServer
 
   def new(x, y, opts) do
-    {:ok, pid} =
-      GenServer.start_link(__MODULE__, opts, name: {:via, Registry, {CellRegistry, {x, y}}})
-
-    pid
+    GenServer.start_link(__MODULE__, opts, name: {:via, Registry, {CellRegistry, {x, y}}})
   end
 
   def get(pid) do
