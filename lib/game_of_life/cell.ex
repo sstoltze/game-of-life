@@ -23,4 +23,8 @@ defmodule GameOfLife.Cell do
   def handle_call(:contents, _from, state) do
     {:reply, Keyword.get(state, :contents), state}
   end
+
+  def child_spec({x, y}) do
+    %{id: {x, y}, start: {__MODULE__, :new, [x, y, contents: nil]}}
+  end
 end

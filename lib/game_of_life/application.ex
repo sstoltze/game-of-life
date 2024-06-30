@@ -5,10 +5,13 @@ defmodule GameOfLife.Application do
 
   use Application
 
+  @board_size 10
+
   @impl true
   def start(_type, _args) do
     children = [
-      {Registry, [name: CellRegistry, keys: :unique]}
+      {Registry, [name: CellRegistry, keys: :unique]},
+      {GameOfLife.CellSupervisor, @board_size}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
