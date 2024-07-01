@@ -18,4 +18,20 @@ defmodule GameOfLife.CellTest do
     Cell.set(pid, :another_thing)
     assert Cell.get(pid) == :another_thing
   end
+
+  test "cells can determine their next state based on their neighbourhood" do
+    {:ok, live} = Cell.new(:a, :b, contents: true)
+    {:ok, dead} = Cell.new(:c, :d, contents: nil)
+    assert Cell.next_state(live, live_neighbours(3))
+    assert Cell.next_state(dead, live_neighbours(3))
+    assert Cell.next_state(live, live_neighbours(2))
+    refute Cell.next_state(dead, live_neighbours(2))
+    refute Cell.next_state(live, live_neighbours(1))
+    refute Cell.next_state(dead, live_neighbours(1))
+    refute Cell.next_state(live, live_neighbours(4))
+    refute Cell.next_state(dead, live_neighbours(4))
+  end
+
+  defp live_neighbours(n),
+    do: Enum.map(1..n, fn _ -> true end) ++ Enum.map(1..(8 - n), fn _ -> nil end)
 end

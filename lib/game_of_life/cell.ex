@@ -18,6 +18,16 @@ defmodule GameOfLife.Cell do
     GenServer.call(pid, {:set_contents, value})
   end
 
+  def next_state(pid, neighbour_contents) do
+    live_neighbours = Enum.filter(neighbour_contents, &Function.identity/1)
+
+    case {get(pid), length(live_neighbours)} do
+      {_, 3} -> true
+      {contents, 2} -> contents
+      _ -> nil
+    end
+  end
+
   @impl GenServer
   def init(state) do
     {:ok, state}
