@@ -14,6 +14,10 @@ defmodule GameOfLife.Cell do
     GenServer.call(pid, :contents)
   end
 
+  def set(pid, value) do
+    GenServer.call(pid, {:set_contents, value})
+  end
+
   @impl GenServer
   def init(state) do
     {:ok, state}
@@ -22,6 +26,11 @@ defmodule GameOfLife.Cell do
   @impl GenServer
   def handle_call(:contents, _from, state) do
     {:reply, Keyword.get(state, :contents), state}
+  end
+
+  @impl GenServer
+  def handle_call({:set_contents, value}, _from, state) do
+    {:reply, {:ok, value}, Keyword.put(state, :contents, value)}
   end
 
   def child_spec({x, y}) do
