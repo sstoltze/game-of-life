@@ -14,4 +14,12 @@ defmodule GameOfLife.CellSupervisor do
 
     Supervisor.init(child_spec, strategy: :one_for_one)
   end
+
+  def cell(x, y) do
+    children = Supervisor.which_children(__MODULE__)
+
+    Enum.find_value(children, nil, fn {coords, pid, :worker, [GameOfLife.Cell]} ->
+      if {x, y} == coords, do: pid
+    end)
+  end
 end

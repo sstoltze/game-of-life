@@ -25,6 +25,6 @@ defmodule GameOfLife.Cell do
   end
 
   def child_spec({x, y}) do
-    %{id: {x, y}, start: {__MODULE__, :new, [x, y, contents: nil]}}
+    %{id: {x, y}, start: {__MODULE__, :new, [x, y, [contents: nil]]}}
   end
 end
