@@ -32,6 +32,11 @@ defmodule GameOfLife.CellTest do
     refute Cell.next_state(dead, live_neighbours(4))
   end
 
+  test "cells can report their coordinates" do
+    {:ok, cell} = Cell.new(:a, :b, [])
+    assert Cell.coordinates(cell) == {:a, :b}
+  end
+
   defp live_neighbours(n),
     do: Enum.map(1..n, fn _ -> true end) ++ Enum.map(1..(8 - n), fn _ -> nil end)
 end

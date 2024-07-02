@@ -28,6 +28,10 @@ defmodule GameOfLife.Cell do
     end
   end
 
+  def coordinates(pid) do
+    Registry.keys(CellRegistry, pid) |> List.first()
+  end
+
   @impl GenServer
   def init(state) do
     {:ok, state}
