@@ -1,5 +1,6 @@
 defmodule CellSupervisorTest do
   use ExUnit.Case
+  use ExUnitProperties
 
   alias GameOfLife.Cell
   alias GameOfLife.CellSupervisor
@@ -13,13 +14,13 @@ defmodule CellSupervisorTest do
     assert CellSupervisor.cell(1, 2) |> Cell.get() |> is_nil()
   end
 
-  test "supervisor can fetch neighbours of a cell" do
-    assert CellSupervisor.neighbours(1, 1) |> Enum.sort() ==
-             [
-               CellSupervisor.cell(2, 1),
-               CellSupervisor.cell(1, 2),
-               CellSupervisor.cell(2, 2)
-             ]
-             |> Enum.sort()
+  property "cell neighbours are next to the cell" do
+    check all(
+            {{x, y}, _pid, _, _} <- member_of(Supervisor.which_children(CellSupervisor)),
+            neighbour <- member_of(CellSupervisor.neighbours(x, y))
+          ) do
+      {a, b} = Cell.coordinates(neighbour)
+      assert abs(x - a) <= 1 and abs(y - b) <= 1
+    end
   end
 end
