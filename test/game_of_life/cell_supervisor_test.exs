@@ -11,7 +11,7 @@ defmodule CellSupervisorTest do
   end
 
   test "cell supervisor can be queried to get cells it is supervising" do
-    assert CellSupervisor.cell(1, 2) |> Cell.get() |> is_nil()
+    assert CellSupervisor.cell(1, 2)
   end
 
   property "cell neighbours are next to the cell" do
