@@ -22,4 +22,11 @@ defmodule GameOfLife.CellSupervisor do
       if {x, y} == coords, do: pid
     end)
   end
+
+  def neighbours(x, y) do
+    for i <- -1..1, j <- -1..1, i != 0 or j != 0 do
+      cell(x + i, y + j)
+    end
+    |> Enum.reject(&is_nil/1)
+  end
 end
