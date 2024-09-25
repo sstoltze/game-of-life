@@ -2,8 +2,8 @@
   description = "A very basic flake";
 
   inputs = {
-    emacsConfig = { url = "github:sstoltze/emacs-config"; };
+    emacsConfig = { url = "/home/sst/git/emacs-config"; };
   };
 
-  outputs = { self, emacsConfig }: emacsConfig.elixirSetup;
+  outputs = { self, emacsConfig }: { devShells = emacsConfig.elixirDevShells; };
 }
